@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fast Roof Supplement Submission | Insurance Workflow Intake</title>
+  <meta name="description" content="Submit roofing supplement documents directly to our automation engine. Fast, secure, and built for roofers, attorneys, and insurance pros.">
+  <meta name="keywords" content="roofing supplement, insurance claim, eagleview, roofing automation, xactimate supplement">
+  <meta name="robots" content="index, follow">
+
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:title" content="Fast Roof Supplement Submission">
+  <meta property="og:description" content="Streamline your roofing supplements with a fast, secure submission tool.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fastroofsupplement.com">
+  <meta property="og:image" content="/preview.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fast Roof Supplement Submission">
+  <meta name="twitter:description" content="Submit documents and streamline your supplement claims.">
+  <meta name="twitter:image" content="/preview.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico">
+
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .form-container { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    h2 { text-align: center; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 12px; width: 100%; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; }
+    .message { margin-top: 20px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Submit Roofing Supplement</h2>
+    <form id="suppForm" enctype="multipart/form-data">
+      <label for="estimate_pdf">Estimate PDF *</label>
+      <input type="file" name="estimate_pdf" id="estimate_pdf" required>
+
+      <label for="eagleview_pdf">EagleView PDF (Optional)</label>
+      <input type="file" name="eagleview_pdf" id="eagleview_pdf">
+
+      <label for="invoice_pdf">Invoice PDF (Optional)</label>
+      <input type="file" name="invoice_pdf" id="invoice_pdf">
+
+      <label for="build_date">Build Date</label>
+      <input type="date" name="build_date" id="build_date">
+
+      <label for="comment">Comment</label>
+      <textarea name="comment" id="comment" rows="5"></textarea>
+
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required>
+
+      <button type="submit">Submit</button>
+      <div class="message" id="message"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('suppForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      message.textContent = 'Submitting...';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('https://suppgenius-api.cloudflare.workers.dev/api/v1/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          message.textContent = 'Successfully submitted!';
+          form.reset();
+        } else {
+          const error = await response.text();
+          message.textContent = `Error: ${error}`;
+        }
+      } catch (err) {
+        message.textContent = `Submission failed: ${err.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
