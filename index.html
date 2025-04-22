@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fast Roof Supplement Submission | Insurance Workflow Intake</title>
   <meta name="description" content="Submit roofing supplement documents directly to our automation engine. Fast, secure, and built for roofers, attorneys, and insurance pros.">
   <meta name="keywords" content="roofing supplement, insurance claim, eagleview, roofing automation, xactimate supplement">
@@ -21,24 +21,23 @@
   <meta name="twitter:description" content="Submit documents and streamline your supplement claims.">
   <meta name="twitter:image" content="/preview.jpg">
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico">
 
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
-    .form-container { background: white; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+    .form-container { background: white; padding: 30px; max-width: 600px; margin: auto; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     h2 { text-align: center; margin-bottom: 20px; }
     label { display: block; margin-top: 15px; font-weight: bold; }
     input, textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
     button { margin-top: 20px; padding: 12px; width: 100%; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; }
-    .message { margin-top: 20px; text-align: center; }
+    #message { margin-top: 20px; text-align: center; font-weight: bold; }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h2>Submit Roofing Supplement</h2>
     <form id="suppForm" enctype="multipart/form-data">
-      <input type="hidden" name="submitted_by" value="FastRoofSupplement.com">
+      <input type="hidden" name="submitted_by" value="fastroofsupplement.com">
 
       <label for="estimate_pdf">Estimate PDF *</label>
       <input type="file" name="estimate_pdf" id="estimate_pdf" required>
@@ -46,7 +45,7 @@
       <label for="eagleview_pdf">EagleView PDF (Optional)</label>
       <input type="file" name="eagleview_pdf" id="eagleview_pdf">
 
-      <label for="invoice_pdf">Invoice PDF (Optional)</label>
+      <label for="invoice_pdf">Material Invoice PDF (Optional)</label>
       <input type="file" name="invoice_pdf" id="invoice_pdf">
 
       <label for="build_date">Build Date</label>
@@ -55,11 +54,11 @@
       <label for="comment">Comment</label>
       <textarea name="comment" id="comment" rows="5"></textarea>
 
-      <label for="email">Email</label>
+      <label for="email">Your Email *</label>
       <input type="email" name="email" id="email" required>
 
       <button type="submit">Submit</button>
-      <div class="message" id="message"></div>
+      <div id="message"></div>
     </form>
   </div>
 
@@ -70,7 +69,6 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       message.textContent = 'Submitting...';
-
       const formData = new FormData(form);
 
       try {
@@ -80,14 +78,14 @@
         });
 
         if (response.ok) {
-          message.textContent = 'Successfully submitted!';
+          message.textContent = '✅ Submitted successfully. Check your email shortly.';
           form.reset();
         } else {
-          const error = await response.text();
-          message.textContent = `Error: ${error}`;
+          const err = await response.text();
+          message.textContent = `❌ Error: ${err}`;
         }
-      } catch (err) {
-        message.textContent = `Submission failed: ${err.message}`;
+      } catch (error) {
+        message.textContent = `❌ Submission failed: ${error.message}`;
       }
     });
   </script>
